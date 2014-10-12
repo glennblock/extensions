@@ -34,10 +34,10 @@ A client may send a request that contains attachments using the media type "mult
 
 ### Parts
 * All _attachment_ fields in the data element must have a corresponding part.
-* The part must have a name matching the form element name.
+* The part must have a filename.
 
 ### Example
-Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item with the value of the attachment being 'jdoe'. There is an additional part which contains the avatar image which has a _name_ of 'jdoe'
+Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item with the value of the attachment being 'jdoe'. There is an additional part which contains the avatar image which has a _name_ of 'avatar' and a filename of "jdoe.jpg". 
 ```
 content-type: multipart/form-data, boundary=AaB03x
 
@@ -50,7 +50,7 @@ content-disposition: form-data; name="email"
 content-type: text/plain; charset=us-ascii
 jdoe@example.org
 --AaB03x
-content-disposition: form-data; name="avatar"
+content-disposition: form-data; name="avatar"; filename="jdoe.jpg"
 content-type: image/jpeg
 ...
 --AaB03x

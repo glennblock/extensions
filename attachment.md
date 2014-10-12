@@ -30,7 +30,7 @@ A new _attachment_ field is introduced on the data element. For a template, this
 }
 ```
 ## Sending attachments
-A client may send a response that contains attachments using the media type "multipart/form-data". It contains the data for the write template as well as attachments.
+A client may send a request that contains attachments using the media type "multipart/form-data". It contains the data for the write template as well as attachments.
 
 ### Parts
 * All _attachment_ fields in the data element must have a corresponding part.

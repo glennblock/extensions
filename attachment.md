@@ -114,4 +114,4 @@ content-transfer-Encoding: binary
 --AaB03x
 ```
 
-To see a real response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16)
+To see a real server response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16)

@@ -1,5 +1,5 @@
 # Attachment extension
-This document outlines an extension which supports sending and receiving CollectionJson documents containing file attachments. This approach uses a multipart/form-data request/response as a means of transfering attachments back and forth. 
+This document outlines an extension which supports sending and receiving CollectionJson documents containing file attachments. This approach uses a multipart/form-data request / multipart/mixed response as a means of transfering attachments back and forth.
 
 *Note*: Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 

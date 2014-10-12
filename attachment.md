@@ -11,8 +11,8 @@ The following RFCs form the basis of the approach in this document:
 * [2388] (http://tools.ietf.org/html/rfc2388) - Returning Values from Forms:  multipart/form-data
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 
-## Attachment template
-A client may receive a CollectionJson document containing a template which accepts attachments which the client can use to send files. 
+## Write template
+A client may receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
 ### Attachment field
 A new _attachment_ field is introduced on the data element. For a template, this indicates that this data element is an attachment.

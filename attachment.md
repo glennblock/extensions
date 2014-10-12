@@ -56,7 +56,11 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receving attachments
-A client may also receive a response that contains attachments. In these cases the response media type will be "multipart/mixed" containing parts for a collection+json document as well as attachments.
+A client may also receive a response that contains attachments.
+
+* If the client sends an accept header of "multipart/mixed", the response media type will be "multipart/mixed" containing parts for a collection+json document as well as attachments.
+
+* If the client sends an accept header of "application/vnd.collection+json", the response will be as expected, a collection+json document. However, the items within the document will have _attachment_ fields (see the **Attachment Data Field** section) to indicate to the client that they can do a multipart request.
 
 ### Parts
 * The first part in the document will be a CollectionJson document. The document will contain pointers back to the attachments in the response.

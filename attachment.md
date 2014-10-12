@@ -59,7 +59,7 @@ A client may also receive a response that contains attachments. In these cases t
 * All additional parts will be attachments which relate to the document.
 * Each attachment must have a "name" as part of the content-disposition header.
 
-### Attachment Data element
+### Attachment Data field
 The _attachment_ field in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the _name_ attribute of the Content-Disposition header in one of the parts.
 
 ### Example

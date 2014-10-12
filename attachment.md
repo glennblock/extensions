@@ -3,7 +3,13 @@ This document outlines an extension which supports sending and receiving Collect
 
 *Note*: Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 
-It based on this [discussion](https://groups.google.com/forum/#!topic/collectionjson/pzdkNGx-aPE)
+It is inspired by this [discussion](https://groups.google.com/forum/#!topic/collectionjson/pzdkNGx-aPE)
+
+The following RFCs form the basis of the approach in this document:
+
+* [1341] (http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) - The Multipart Content-Type
+* [2388] (http://tools.ietf.org/html/rfc2388) - Returning Values from Forms:  multipart/form-data
+* [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 
 ## Attachment template
 A client may receive a CollectionJson document containing a template which accepts attachments which the client can use to send files. 

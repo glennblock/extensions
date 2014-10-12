@@ -15,7 +15,7 @@ The following RFCs form the basis of the approach in this document:
 A client may receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
 ### Attachment field
-A new _attachment_ field is introduced on the data element. For a template, this indicates that this data element is an attachment.
+A new _attachment_ field is introduced on the data element. For a template, this indicates that this data element is an attachment. The value of the attachment is the mime type that is expected.
 
 ### Example
 ```javascript
@@ -24,7 +24,7 @@ A new _attachment_ field is introduced on the data element. For a template, this
     "data" : [
       {"name" : "full-name", "value" : ""},
       {"name" : "email", "value" : ""},
-      {"name" : "avatar", "attachment": ""}
+      {"name" : "avatar", "attachment": "image/jpeg"}
     ]
   }
 }
@@ -66,7 +66,7 @@ A client may also receive a response that contains attachments. In these cases t
 * Each attachment must have a "name" as part of the content-disposition header.
 
 ### Attachment Data field
-The _attachment_ field in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the _name_ attribute of the Content-Disposition header in one of the parts.
+The _attachment_ field in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the filename in the content-disposition header in one of the parts.
 
 ### Example
 Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the CollectionJson document.

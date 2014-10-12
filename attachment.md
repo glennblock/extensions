@@ -28,6 +28,7 @@ A client may send a response that contains attachments using the media type "mul
 
 ### Parts
 * The first part in the document will be a CollectionJson template.
+* All _attachment_ fields in the data element must have a value set to the name in the content-disposition header of the corresponding part.
 * The document part must have a _name_ of "template" in it's content-disposition header
 * All additional parts will be attachments.
 * Each attachment may have a "name" as part of the content-disposition header which matches the name in the template.
@@ -48,7 +49,7 @@ Content-Disposition: form-data; name="template"
     "data" : [
       {"name" : "full-name", "value" : "John Doe"},
       {"name" : "email", "value" : "jdoe@example.org"},
-      {"name" : "avatar", "attachment": ""}
+      {"name" : "avatar", "attachment": "jdoe"}
     ]
   }
 } 
@@ -57,7 +58,7 @@ Content-Disposition: form-data; name="document"
 Content-Type: application/vnd.collection+json
 
 --AaB03x
-Content-Disposition: attachment; name="avatar"; filename="johndoe.jpeg"
+Content-Disposition: attachment; name="jdoe"; filename="johndoe.jpeg"
 Content-Type: image/jpeg
 Content-Transfer-Encoding: binary
 ...

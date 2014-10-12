@@ -114,4 +114,4 @@ content-transfer-Encoding: binary
 --AaB03x
 ```
 
-To see a gist with real server response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16). You can also hit a live version [here] (http://cj-attachment.azurewebsites.net/) with a tool like Fiddler.
+To see a gist with real server response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16). You can also hit a live version [here] (http://cj-attachment.azurewebsites.net/friend) with a tool like Fiddler.

@@ -66,7 +66,7 @@ A client may also receive a response that contains attachments. In these cases t
 The _attachment_ field in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the _name_ attribute of the Content-Disposition header in one of the parts.
 
 ### Example
-Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an _attachment_ element. Then there are additional parts which are the actual attachments. Each one has a _name_ which the CollectionJson document uses as the key.
+Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the CollectionJson document.
 
 ```
 content-type: multipart/mixed, boundary=AaB03x
@@ -84,7 +84,7 @@ content-type: application/vnd.collection+json
         "data" : [
           {"name" : "full-name", "value" : "John Doe", "prompt" : "Full Name"},
           {"name" : "email", "value" : "jdoe@example.org", "prompt" : "Email"}
-          {"name" : "avatar", "attachment" : "jdoe"}
+          {"name" : "avatar", "attachment" : "jdoe.jpg"}
         ]
       },
       {
@@ -92,19 +92,19 @@ content-type: application/vnd.collection+json
         "data" : [
           {"name" : "full-name", "value" : "Mike Amundsen", "prompt" : "Full Name"},
           {"name" : "email", "value" : "mca@amundsen.com", "prompt" : "Email"}
-          {"name" : "avatar", "attachment" : "mamund"}
+          {"name" : "avatar", "attachment" : "mamund.jpg"}
         ]
       }
     }
   }
 }
 --AaB03x
-content-disposition: attachment; filename="jdoe.jpeg"; name="jdoe";
+content-disposition: attachment; filename="jdoe.jpeg"
 content-type: image/jpeg
 content-transfer-encoding: binary
 ...
 --AaB03x
-content-disposition: attachment; filename="mamund.jpeg"; name="mamund";
+content-disposition: attachment; filename="mamund.jpeg"
 content-type: image/jpeg
 content-transfer-Encoding: binary
 ...

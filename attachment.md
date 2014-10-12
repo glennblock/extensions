@@ -30,9 +30,6 @@ A client may send a response that contains attachments using the media type "mul
 * All _attachment_ fields in the data element must have a corresponding part.
 * The part must have a name matching the form element name.
 
-### Attachment field
-An _attachment_ field in a data element of the template indicates that the client should send an attachment.
-
 ### Example
 Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item with the value of the attachment being 'jdoe'. There is an additional part which contains the avatar image which has a _name_ of 'jdoe'
 ```

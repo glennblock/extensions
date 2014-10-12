@@ -6,7 +6,7 @@ This document outlines an extension which supports sending and receiving Collect
 It based on this [discussion](https://groups.google.com/forum/#!topic/collectionjson/pzdkNGx-aPE)
 
 ## Attachment template
-A client may receive a CollectionJson document containing a template which accepts attachments which the client can use to send files. Each attachment will be indicated with a _file_ attribute.
+A client may receive a CollectionJson document containing a template which accepts attachments which the client can use to send files. 
 
 ### Attachment field
 A new _attachment_ field is introduced on the data element. For a template, this indicates that this data element is an attachment.
@@ -24,14 +24,11 @@ A new _attachment_ field is introduced on the data element. For a template, this
 }
 ```
 ## Sending attachments
-A client may send a response that contains attachments using the media type "multipart/form-data". It contains parts with a CollectionJson template populated with data as well as attachments.
+A client may send a response that contains attachments using the media type "multipart/form-data". It contains the data for the write template as well as attachments.
 
 ### Parts
-* The first part in the document will be a CollectionJson template.
-* All _attachment_ fields in the data element must have a value set to the name in the content-disposition header of the corresponding part.
-* The document part must have a _name_ of "template" in it's content-disposition header
-* All additional parts will be attachments.
-* Each attachment may have a "name" as part of the content-disposition header which matches the name in the template.
+* All _attachment_ fields in the data element must have a corresponding part.
+* The part must have a name matching the form element name.
 
 ## Attachment field
 An _attachment_ field in a data element of the template indicates that the client should send an attachment.
@@ -39,34 +36,24 @@ An _attachment_ field in a data element of the template indicates that the clien
 ### Example
 Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item with the value of the attachment being 'jdoe'. There is an additional part which contains the avatar image which has a _name_ of 'jdoe'
 ```
-Content-Type: multipart/form-data, boundary=AaB03x
-Content-Type: application/vnd.collection+json
---AaB03x
-Content-Disposition: form-data; name="template"
-
-{
-  "template" : {
-    "data" : [
-      {"name" : "full-name", "value" : "John Doe"},
-      {"name" : "email", "value" : "jdoe@example.org"},
-      {"name" : "avatar", "attachment": "jdoe"}
-    ]
-  }
-} 
---AaB03x
-Content-Disposition: form-data; name="document"
-Content-Type: application/vnd.collection+json
+content-type: multipart/form-data, boundary=AaB03x
 
 --AaB03x
-Content-Disposition: attachment; name="jdoe"; filename="johndoe.jpeg"
-Content-Type: image/jpeg
-Content-Transfer-Encoding: binary
+content-disposition: form-data; name="full-name"
+content-type: text/plain; charset=us-ascii
+John Doe
+--AaB03x
+content-disposition: form-data; name="email"
+content-type: text/plain; charset=us-ascii
+jdoe@example.org
+--AaB03x
+content-disposition: form-data; name="avatar"
+content-type: image/jpeg
 ...
-
 --AaB03x
 ```
 ## Receving attachments
-A client may also receive a response that contains attachments. In these cases the response media type will be "multipart/form-data" containing parts for a CollectionJson document as well as attachments.
+A client may also receive a response that contains attachments. In these cases the response media type will be "multipart/mixed" containing parts for a collection+json document as well as attachments.
 
 ### Parts
 * The first part in the document will be a CollectionJson document. The document will contain pointers back to the attachments in the response.
@@ -79,14 +66,13 @@ A client may also receive a response that contains attachments. In these cases t
 The _attachment_ field in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the _name_ attribute of the Content-Disposition header in one of the parts.
 
 ### Example
-Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has a _file_ element. Then there are additional parts which are the actual attachments. Each one has a _name_ which the CollectionJson document uses as the key.
+Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an _attachment_ element. Then there are additional parts which are the actual attachments. Each one has a _name_ which the CollectionJson document uses as the key.
 
 ```
-Content-type: multipart/form-data, boundary=AaB03x
+content-type: multipart/mixed, boundary=AaB03x
  
 --AaB03x
-Content-Disposition: form-data; name="document"
-Content-Type: application/vnd.collection+json
+content-type: application/vnd.collection+json
 { "collection" :
   {
     "version" : "1.0",
@@ -112,19 +98,16 @@ Content-Type: application/vnd.collection+json
     }
   }
 }
-
 --AaB03x
-Content-Disposition: attachment; name="jdoe"; filename="johndoe.jpeg"
-Content-Type: image/jpeg
-Content-Transfer-Encoding: binary
+content-disposition: attachment; filename="jdoe.jpeg"; name="jdoe";
+content-type: image/jpeg
+content-transfer-encoding: binary
 ...
-
 --AaB03x
-Content-Disposition: attachment; name="mamund"; filename="mikeamundsen.jpeg"
-Content-Type: image/jpeg
-Content-Transfer-Encoding: binary
+content-disposition: attachment; filename="mamund.jpeg"; name="mamund";
+content-type: image/jpeg
+content-transfer-Encoding: binary
 ...
-
 --AaB03x
 ```
 

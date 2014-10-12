@@ -8,8 +8,8 @@ It based on this [discussion](https://groups.google.com/forum/#!topic/collection
 ## Attachment template
 A client may receive a CollectionJson document containing a template which accepts attachments which the client can use to send files. Each attachment will be indicated with a _file_ attribute.
 
-### File data element
-A new _file_ attribute is introduced on the data element. For a template, this indicates that this data element is a file.
+### Attachment data element
+A new _attachment_ attribute is introduced on the data element. For a template, this indicates that this data element is an attachment.
 
 ### Example
 ```javascript
@@ -18,7 +18,7 @@ A new _file_ attribute is introduced on the data element. For a template, this i
     "data" : [
       {"name" : "full-name", "value" : ""},
       {"name" : "email", "value" : ""},
-      {"name" : "avatar", "file": ""}
+      {"name" : "avatar", "attachment": ""}
     ]
   }
 }
@@ -36,7 +36,7 @@ A client may send a response that contains attachments using the media type "mul
 A _file_ element of the template indicates that the client should send an attachment.
 
 ### Example
-Below you can can see the request contains a write template with contact information. The template contains an avatar _file_ item. There is an additional part which contains the avatar image which has a _name_ of 'avatar'
+Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item. There is an additional part which contains the avatar image which has a _name_ of 'avatar'
 ```
 Content-Type: multipart/form-data, boundary=AaB03x
 Content-Type: application/vnd.collection+json
@@ -48,7 +48,7 @@ Content-Disposition: form-data; name="template"
     "data" : [
       {"name" : "full-name", "value" : "John Doe"},
       {"name" : "email", "value" : "jdoe@example.org"},
-      {"name" : "avatar", "file": ""}
+      {"name" : "avatar", "attachment": ""}
     ]
   }
 } 
@@ -73,8 +73,8 @@ A client may also receive a response that contains attachments. In these cases t
 * All additional parts will be attachments which relate to the document.
 * Each attachment must have a "name" as part of the content-disposition header.
 
-### File Data element
-The _file_ element in the response indicates that this item has an associated attachment. The _value_ of the file matches the _name_ attribute of the Content-Disposition header in one of the parts.
+### Attachment Data element
+The _attachment_ element in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the _name_ attribute of the Content-Disposition header in one of the parts.
 
 ### Example
 Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has a _file_ element. Then there are additional parts which are the actual attachments. Each one has a _name_ which the CollectionJson document uses as the key.
@@ -96,7 +96,7 @@ Content-Type: application/vnd.collection+json
         "data" : [
           {"name" : "full-name", "value" : "John Doe", "prompt" : "Full Name"},
           {"name" : "email", "value" : "jdoe@example.org", "prompt" : "Email"}
-          {"name" : "avatar", "file" : "jdoe"}
+          {"name" : "avatar", "attachment" : "jdoe"}
         ]
       },
       {
@@ -104,7 +104,7 @@ Content-Type: application/vnd.collection+json
         "data" : [
           {"name" : "full-name", "value" : "Mike Amundsen", "prompt" : "Full Name"},
           {"name" : "email", "value" : "mca@amundsen.com", "prompt" : "Email"}
-          {"name" : "avatar", "file" : "mamund"}
+          {"name" : "avatar", "attachment" : "mamund"}
         ]
       }
     }
@@ -125,3 +125,4 @@ Content-Transfer-Encoding: binary
 
 --AaB03x
 ```
+

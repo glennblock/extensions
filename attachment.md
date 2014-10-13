@@ -74,7 +74,6 @@ content-type: application/vnd.collection+json
         "data" : [
           {"name" : "full-name", "value" : "John Doe", "prompt" : "Full Name"},
           {"name" : "email", "value" : "jdoe@example.org", "prompt" : "Email"}
-          {"name" : "avatar", "attachment" : "jdoe.jpg"}
         ],
         "links": [
           {"name": "avatar", "rel": "enclosure", "href":"http://example.org/images/jdoe.jpg"}

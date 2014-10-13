@@ -14,27 +14,37 @@ The following RFCs form the basis of the approach in this document:
 ## Write template
 A client may receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
+### enc-type field
+A new _enc-type_ field is introduced on the template element.
+* It MUST have a value of "application/json", "application/vnd.collection+json", or "multipart/form-data".
+* For templates with attachments, "multipart/form-data" MUST be used.
+
 ### Attachment field
-A new _attachment_ field is introduced on the data element. For a template, this indicates that this data element is an attachment. The value of the attachment is the mime type that is expected.
+A new _attachment_ field is introduced on the data element. 
+* This field MUST be set to "true" to indicate to the client that this is an attachment.
+** If _enc-type_ is not present / is not set to "multipart/form-data" then clients MUST treat it as text.
+** If _attachment_ is set to false, then clients MUST treat it as text.
 
 ### Example
 ```javascript
 {
   "template" : {
+    "enc-type" : "multipart/form-data",
     "data" : [
       {"name" : "full-name", "value" : ""},
       {"name" : "email", "value" : ""},
-      {"name" : "avatar", "attachment": "image/jpeg"}
+      {"name" : "avatar", "attachment": "true"}
     ]
   }
 }
 ```
 ## Sending attachments
-A client may send a request that contains attachments using the media type "multipart/form-data". It contains the data for the write template as well as attachments.
+A client MAY send a request that contains attachments using the media type "multipart/form-data". The request contains the data for the write template as well as attachments.
 
 ### Parts
-* All _attachment_ fields in the data element must have a corresponding part.
-* The part must have a filename.
+* Items with _attachment_ fields in the data element MAY have a corresponding part.
+* If there is a corresponding part, then it MUST match the name of a data element in the template.
+** If a server receives a request with a part that does not match the data element, it MAY ignore the attachment.
 
 ### Example
 Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item with the value of the attachment being 'jdoe'. There is an additional part which contains the avatar image which has a _name_ of 'avatar' and a filename of "jdoe.jpg". 
@@ -56,10 +66,10 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receving attachments
-A client may also receive a response that items which contain attachments. Attachments are indicated by a link with a rel of "enclosure". This indicates that href points to a file which should be downloaded.
+A client may also receive a response that items which contain attachments. Attachments are indicated by a link with a render value of "attachment". This indicates that href points to a file which should be downloaded.
 
 ### Example
-Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the CollectionJson document.
+Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the collection+json document.
 
 ```
 content-type: application/vnd.collection+json
@@ -76,7 +86,7 @@ content-type: application/vnd.collection+json
           {"name" : "email", "value" : "jdoe@example.org", "prompt" : "Email"}
         ],
         "links": [
-          {"name": "avatar", "rel": "enclosure", "href":"http://example.org/images/jdoe.jpg"}
+          {"name": "avatar", "rel": "related", "render": "attachment", "href":"http://example.org/images/jdoe.jpg"}
         ]
       },
       {
@@ -86,12 +96,14 @@ content-type: application/vnd.collection+json
           {"name" : "email", "value" : "mca@amundsen.com", "prompt" : "Email"}
         ],
         "links": [
-          {"name": "avatar", "rel": "enclosure", "href":"http://example.org/images/mamund.jpg"}
+          {"name": "avatar", "rel": "related", "render": "attachment", "href":"http://example.org/images/mamund.jpg"}
         ]
       }
     }
   }
 }
 ```
+
+**Note** - The server below / gist is currently not up to date with the spec.
 
 To see a gist with real server response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16). You can also hit a live version [here] (http://cj-attachment.azurewebsites.net/friend) with a tool like Fiddler or using curl: `curl http://cj-attachment.azurewebsites.net/friend -v`

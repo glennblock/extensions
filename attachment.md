@@ -12,7 +12,7 @@ The following RFCs form the basis of the approach in this document:
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 
 ## Write template
-A client may receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
+A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
 ### enc-type field
 A new _enc-type_ field is introduced on the template element.
@@ -66,7 +66,7 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receving attachments
-A client may also receive a response that items which contain attachments. Attachments are indicated by a link with a render value of "attachment". This indicates that href points to a file which should be downloaded.
+A client MAY also receive a response that items which contain attachments. Attachments are indicated by a link with a render value of "attachment". This indicates that href points to a file which SHOULD be downloaded.
 
 ### Example
 Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the collection+json document.

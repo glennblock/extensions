@@ -74,10 +74,13 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receving attachments
-A client MAY receive a response which contains links with the `render` property set to `attachment`. The client SHOULD treat the associated href as a download-able link. Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
+A client MAY receive a response which contains links which represent downloadable attachments.
+
+## attachment render value
+A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
 
 ### Example
-Below is an example of a response containing links which are attachments, namely the `avatar` link has a `render` value of `attachemnt`. The client in this casse SHOULD download the associated image.
+Below is an example of a response containing links which are attachments, namely the `avatar` link has a `render` value of `attachment`. The client in this casse SHOULD download the associated image.
 
 ```
 content-type: application/vnd.collection+json

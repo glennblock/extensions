@@ -17,19 +17,19 @@ The following RFCs form the basis of the approach in this document:
 ## Write template
 A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
-### Content-type field
+### Content-type property
 This extension defines a new optional property for the template object: `content-type`. The two valid values for `content-type ` are:
 
 * `multipart/form-data` (this is the one to use for uploading attachments)
 * `application/vnd.collection+json` (this is the one to use for sending regular CJ documents) If the content-type property is missing, clients SHOULD use `application/vnd.collection+json` when sending a CJ document. If the content-type property is not supported and/or the provided value is not understood by the client, the client MUST use `application/vnd.collection+json` when sending CJ documents.
 
-### Attachment field
+### Attachment property
 This extension defines a new property for the data object: `attachment`. This property is only valid for data objects that are children of the template object. 
 
 The two valid values for the `attachment` property:
 
 * true (treat this data element as an attachment to be uploaded)
-* false (treat this data element as a text element) If the client does not support the attachment property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
+* false (treat this data element as a text element) If the client does not support the `attachment` property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
 
 ### Example
 Below you can can see the request contains a friend write template which specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment.
@@ -50,7 +50,7 @@ Below you can can see the request contains a friend write template which specifi
 A client MAY send a request that contains attachments using the media type "multipart/form-data". The request contains the data for the write template as well as attachments.
 
 ### Attachment Body Parts
-* Items with _attachment_ fields in the data element MAY have a corresponding body part in the multipart request.
+* Items with `attachment` properties in the data element MAY have a corresponding body part in the multipart request.
 * For the part to be corresponding, it MUST match the name of a data element in the template.
 ** If a server receives a request with a part that does not match the data element, it MAY ignore the attachment.
 

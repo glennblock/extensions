@@ -56,29 +56,12 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receving attachments
-A client may also receive a response that contains attachments.
-
-* If the client sends an accept header of "multipart/mixed", the response media type will be "multipart/mixed" containing parts for a collection+json document as well as attachments.
-
-* If the client sends an accept header of "application/vnd.collection+json", the response will be as expected, a collection+json document. However, if there are attachments, the items within the document will have _attachment_ fields (see the **Attachment Data Field** section) to indicate to the client that they can do a multipart request.
-
-### Parts
-* The first part in the document will be a CollectionJson document. The document will contain pointers back to the attachments in the response.
-* All _attachment_ fields in the data element must have a value set to the name in the content-disposition header of the corresponding part.
-* The document part must have a "name" of "document" as it's content-disposition header
-* All additional parts will be attachments which relate to the document.
-* Each attachment must have a "name" as part of the content-disposition header.
-
-### Attachment Data field
-The _attachment_ field in the response indicates that this item has an associated attachment. The _value_ of the attachment matches the filename in the content-disposition header in one of the parts.
+A client may also receive a response that items which contain attachments. Attachments are indicated by a link with a rel of "enclosure". This indicates that href points to a file which should be downloaded.
 
 ### Example
 Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the CollectionJson document.
 
 ```
-content-type: multipart/mixed, boundary=AaB03x
- 
---AaB03x
 content-type: application/vnd.collection+json
 { "collection" :
   {
@@ -92,6 +75,9 @@ content-type: application/vnd.collection+json
           {"name" : "full-name", "value" : "John Doe", "prompt" : "Full Name"},
           {"name" : "email", "value" : "jdoe@example.org", "prompt" : "Email"}
           {"name" : "avatar", "attachment" : "jdoe.jpg"}
+        ],
+        "links": [
+          {"name": "avatar", "rel": "enclosure", "href":"http://example.org/images/jdoe.jpg"}
         ]
       },
       {
@@ -99,23 +85,14 @@ content-type: application/vnd.collection+json
         "data" : [
           {"name" : "full-name", "value" : "Mike Amundsen", "prompt" : "Full Name"},
           {"name" : "email", "value" : "mca@amundsen.com", "prompt" : "Email"}
-          {"name" : "avatar", "attachment" : "mamund.jpg"}
+        ],
+        "links": [
+          {"name": "avatar", "rel": "enclosure", "href":"http://example.org/images/mamund.jpg"}
         ]
       }
     }
   }
 }
---AaB03x
-content-disposition: attachment; filename="jdoe.jpeg"
-content-type: image/jpeg
-content-transfer-encoding: binary
-...
---AaB03x
-content-disposition: attachment; filename="mamund.jpeg"
-content-type: image/jpeg
-content-transfer-Encoding: binary
-...
---AaB03x
 ```
 
 To see a gist with real server response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16). You can also hit a live version [here] (http://cj-attachment.azurewebsites.net/friend) with a tool like Fiddler or using curl: `curl http://cj-attachment.azurewebsites.net/friend -v`

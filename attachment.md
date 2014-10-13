@@ -17,13 +17,13 @@ The following RFCs form the basis of the approach in this document:
 ## Write template
 A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
-### content-type field
+### Content-type field
 This extension defines a new optional property for the template object: `content-type`. The two valid values for `content-type ` are:
 
 * `multipart/form-data` (this is the one to use for uploading attachments)
 * `application/vnd.collection+json` (this is the one to use for sending regular CJ documents) If the content-type property is missing, clients SHOULD use `application/vnd.collection+json` when sending a CJ document. If the content-type property is not supported and/or the provided value is not understood by the client, the client MUST use `application/vnd.collection+json` when sending CJ documents.
 
-### attachment field
+### Attachment field
 This extension defines a new property for the data object: `attachment`. This property is only valid for data objects that are children of the template object. 
 
 The two valid values for the `attachment` property:
@@ -76,7 +76,7 @@ content-type: image/jpeg
 ## Receving attachments
 A client MAY receive a response which contains links which represent downloadable attachments.
 
-## attachment render value
+## Attachment render value
 A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
 
 ### Example

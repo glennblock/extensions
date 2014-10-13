@@ -1,5 +1,5 @@
 # Attachment extension
-This document outlines an extension which supports sending and receiving collection+json documents containing file attachments. This approach uses a multipart/form-data request / multipart/mixed response as a means of transfering attachments back and forth.
+This extension outlines an extension which supports sending and receiving `collection+json` documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
 
 *Note*: Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 
@@ -11,25 +11,33 @@ The following RFCs form the basis of the approach in this document:
 * [2388] (http://tools.ietf.org/html/rfc2388) - Returning Values from Forms:  multipart/form-data
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 
+## Live example
+* To see a live response containing attachments, use the following command: `curl http://cj-attachment.azurewebsites.net/friend -v`
+
 ## Write template
 A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
-### enc-type field
-A new _enc-type_ field is introduced on the template element.
-* It MUST have a value of "application/json", "application/vnd.collection+json", or "multipart/form-data".
-* For templates with attachments, "multipart/form-data" MUST be used.
+### content-type field
+This extension defines a new optional property for the template object: `content-type`. The two valid values for `content-type ` are:
+
+* `multipart/form-data` (this is the one to use for uploading attachments)
+* `application/vnd.collection+json` (this is the one to use for sending regular CJ documents) If the content-type property is missing, clients SHOULD use `application/vnd.collection+json` when sending a CJ document. If the content-type property is not supported and/or the provided value is not understood by the client, the client MUST use `application/vnd.collection+json` when sending CJ documents.
 
 ### attachment field
-A new _attachment_ field is introduced on the data element. 
-* This field MUST be set to "true" to indicate to the client that this is an attachment.
-** If _enc-type_ is not present / is not set to "multipart/form-data" then clients MUST treat it as text.
-** If _attachment_ is set to false, then clients MUST treat it as text.
+This extension defines a new property for the data object: `attachment`. This property is only valid for data objects that are children of the template object. 
+
+The two valid values for the `attachment` property:
+
+* true (treat this data element as an attachment to be uploaded)
+* false (treat this data element as a text element) If the client does not support the attachment property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
 
 ### Example
+Below you can can see the request contains a friend write template which specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment.
+
 ```javascript
 {
   "template" : {
-    "enc-type" : "multipart/form-data",
+    "content-type" : "multipart/form-data",
     "data" : [
       {"name" : "full-name", "value" : ""},
       {"name" : "email", "value" : ""},
@@ -41,13 +49,13 @@ A new _attachment_ field is introduced on the data element.
 ## Sending attachments
 A client MAY send a request that contains attachments using the media type "multipart/form-data". The request contains the data for the write template as well as attachments.
 
-### Parts
-* Items with _attachment_ fields in the data element MAY have a corresponding part.
-* If there is a corresponding part, then it MUST match the name of a data element in the template.
+### Attachment Body Parts
+* Items with _attachment_ fields in the data element MAY have a corresponding body part in the multipart request.
+* For the part to be corresponding, it MUST match the name of a data element in the template.
 ** If a server receives a request with a part that does not match the data element, it MAY ignore the attachment.
 
 ### Example
-Below you can can see the request contains a write template with contact information. The template contains an avatar _attachment_ item with the value of the attachment being 'jdoe'. There is an additional part which contains the avatar image which has a _name_ of 'avatar' and a filename of "jdoe.jpg". 
+Below you can can see the request contains three body parts. The first two contain textual information for full-name and email, while the third is an attachment containing the avatar.  
 ```
 content-type: multipart/form-data, boundary=AaB03x
 
@@ -66,10 +74,10 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receving attachments
-A client MAY also receive a response that items which contain attachments. Attachments are indicated by a link with a render value of "attachment". This indicates that href points to a file which SHOULD be downloaded.
+A client MAY receive a response which contains links with the `render` property set to `attachment`. The client SHOULD treat the associated href as a download-able link. Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
 
 ### Example
-Below is an example of a response containing attachments. The first part is a document which contains the list of contacts where each contact has an avatar with an _attachment_ field. Then there are additional parts which are the actual attachments. Each attachment's filename corresponds to the value of the _attachment_ field for the item in  the collection+json document.
+Below is an example of a response containing links which are attachments, namely the `avatar` link has a `render` value of `attachemnt`. The client in this casse SHOULD download the associated image.
 
 ```
 content-type: application/vnd.collection+json
@@ -104,6 +112,3 @@ content-type: application/vnd.collection+json
 }
 ```
 
-**Note** - The server below / gist is currently not up to date with the spec.
-
-To see a gist with real server response with attachments go [here] (https://gist.github.com/glennblock/8db0d1facb69af67af16). You can also hit a live version [here] (http://cj-attachment.azurewebsites.net/friend) with a tool like Fiddler or using curl: `curl http://cj-attachment.azurewebsites.net/friend -v`

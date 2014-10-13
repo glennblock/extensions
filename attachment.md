@@ -51,8 +51,7 @@ A client MAY send a request that contains attachments using the media type "mult
 
 ### Attachment Body Parts
 * Items with `attachment` properties in the data element MAY have a corresponding body part in the multipart request.
-* For the part to be corresponding, it MUST match the name of a data element in the template.
-** If a server receives a request with a part that does not match the data element, it MAY ignore the attachment.
+* For the part to be corresponding, it MUST match the name of a data element in the template. If a server receives a request with a part that does not match the data element, it MAY ignore the attachment.
 
 ### Example
 Below you can can see the request contains three body parts. The first two contain textual information for full-name and email, while the third is an attachment containing the avatar.  

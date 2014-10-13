@@ -19,7 +19,7 @@ A new _enc-type_ field is introduced on the template element.
 * It MUST have a value of "application/json", "application/vnd.collection+json", or "multipart/form-data".
 * For templates with attachments, "multipart/form-data" MUST be used.
 
-### Attachment field
+### attachment field
 A new _attachment_ field is introduced on the data element. 
 * This field MUST be set to "true" to indicate to the client that this is an attachment.
 ** If _enc-type_ is not present / is not set to "multipart/form-data" then clients MUST treat it as text.

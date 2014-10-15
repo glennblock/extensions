@@ -18,6 +18,12 @@ To see a response containing attachment links, use the following command:
 curl http://cj-attachment.azurewebsites.net/friends -v
 ```
 
+You can also grab a specific friend, using the href for the item in the payload. Also you can just as well create a direct request using the shortname (first initial + last name)
+
+```test
+curl http://cj-attachment.azurewebsites.net/friends/mamundsen
+```
+
 To send a multipart/form-data request with files, use the following command subsituting `thumbnail.png` with your own image.
 
 ```text

@@ -12,7 +12,7 @@ The following RFCs form the basis of the approach in this document:
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 
 ## Live example
-To see a response containing attachment links, use the following command: 
+To see a response containing attachment links, use the following command or just open in a browser: 
 
 ```text
 curl http://cj-attachment.azurewebsites.net/friends -v
@@ -30,7 +30,7 @@ To send a multipart/form-data request with files, use the following command subs
 curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" --form blog="http://example.org/jdoe" --form avatar="@./thumbnail.png" http://cj-attachment.azurewebsites.net/friends
 ```
 
-After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case.
+After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case. You can open it in a browser and it will download.
 
 
 

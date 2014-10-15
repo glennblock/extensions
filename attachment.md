@@ -12,7 +12,21 @@ The following RFCs form the basis of the approach in this document:
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
 
 ## Live example
-* To see a live response containing attachments, use the following command: `curl http://cj-attachment.azurewebsites.net/friend -v`
+To see a response containing attachment links, use the following command: 
+
+```text
+curl http://cj-attachment.azurewebsites.net/friends -v
+```
+
+To send a multipart/form-data request with files, use the following command subsituting `thumbnail.png` with your own image.
+
+```text
+curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" --form blog="http://example.org/jdoe" --form avatar="@./thumbnail.png" http://cj-attachment.azurewebsites.net/friends
+```
+
+After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case.
+
+
 
 ## Write template
 A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 

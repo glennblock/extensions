@@ -5,11 +5,13 @@ This extension outlines an extension which supports sending and receiving `colle
 
 It is inspired by this [discussion](https://groups.google.com/forum/#!topic/collectionjson/pzdkNGx-aPE)
 
-The following RFCs form the basis of the approach in this document:
+The following RFCs/documents form the basis of the approach in this document:
 
 * [1341] (http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) - The Multipart Content-Type
 * [2388] (http://tools.ietf.org/html/rfc2388) - Returning Values from Forms:  multipart/form-data
+* [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) - Updates to RFC2388
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
+* 
 
 ## Live example
 To see a response containing attachment links, use the following command or just open in a browser: 
@@ -50,7 +52,7 @@ The two valid values for the `attachment` property:
 * false (treat this data element as a text element) If the client does not support the `attachment` property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
 
 ### Example
-Below you can can see the request contains a friend write template which specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment.
+Below you can can see the request contains a friend write template which specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
 
 ```javascript
 {
@@ -65,11 +67,12 @@ Below you can can see the request contains a friend write template which specifi
 }
 ```
 ## Sending attachments
-A client MAY send a request that contains attachments using the media type "multipart/form-data". The request contains the data for the write template as well as attachments.
+A client MAY send a request that contains attachments using the media type "multipart/form-data". The request contains the data for the write template passed as form data via the `content-disposition header` as well as file uploads.
 
-### Attachment Body Parts
-* Items with `attachment` properties in the data element MAY have a corresponding body part in the multipart request.
-* For the part to be corresponding, it MUST match the name of a data element in the template. If a server receives a request with a part that does not match the data element, it MAY ignore the attachment.
+### Mulipart requests
+This extension compiles with with [RFC2388] and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for the guidelines. 
+
+Note: At this time, multi-file attachements per template data object are not supported.
 
 ### Example
 Below you can can see the request contains three body parts. The first two contain textual information for full-name and email, while the third is an attachment containing the avatar.  

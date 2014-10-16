@@ -73,7 +73,7 @@ Below you can can see the request contains a friend write template which specifi
 }
 ```
 ## Sending attachments
-A client MAY send a request that contains attachments using the media type "multipart/form-data". The request contains the data for the write template passed as form data via the `content-disposition header` as well as file uploads.
+A client MAY send a request that contains attachments using the media type `multipart/form-data`. The request contains the data for the write template passed as form data via the `content-disposition header` as well as file uploads.
 
 ### Mulipart requests
 This extension compiles with [RFC2388] (http://tools.ietf.org/html/rfc2388) and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for the guidelines. 

@@ -38,10 +38,10 @@ curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" 
 After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case. You can open it in a browser and it will download.
 
 ## Write template
-A client MAY receive a CJ document containing a `Write Template` that accepts attachments that the client can use to send files. 
+A client MAY receive a CJ document containing a _Write Template_ that accepts attachments that the client can use to send files. 
 
 ### Content-type property
-This extension defines a new optional property for the template object: `contentType`. The two valid values for `contentType` are:
+This extension defines a new optional property for the `template` object: `contentType`. The two valid values for `contentType` are:
 
 * `multipart/form-data` - This is the one to use for uploading attachments.
 * `application/vnd.collection+json` - This is the one to use for sending regular CJ `items`. If the content-type property is missing, not supported and/or the client does not understand the provided value, the client MUST use `application/vnd.collection+json` when sending CJ documents.
@@ -58,7 +58,7 @@ The two valid values for the `attachment` property:
 > If the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element.
 
 ### Example
-Below you can can see the request contains a friend `Write Template` that specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
+Below you can can see the request contains a friend _Write Template_ that specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
 
 ```javascript
 {
@@ -73,19 +73,19 @@ Below you can can see the request contains a friend `Write Template` that specif
 }
 ```
 ## Sending attachments
-A client MAY send a request that contains attachments using the media type `multipart/form-data`. The request contains the data for the write template passed as form data via the `content-disposition header` as well as file uploads.
+A client MAY send a request that contains attachments using the media type `multipart/form-data`. The request contains the data for the _Write Template_ passed as form data via the `content-disposition header` as well as file uploads.
 
 ### Mulipart requests
 This extension compiles with [RFC 2388] (http://tools.ietf.org/html/rfc2388) and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for guidelines on the proper way to craft the request.
 
 Some key points to remember in the context of Collection+JSON:
  
-* For each data object in the write template there SHOULD be:
+* For each data object in the _Write Template_ there SHOULD be:
   * A separate body part for the data object.
   * A `content-disposition` header of type `form-data` with a `name` parameter matching the template object name.
-  * If the template data object has `"attachment":"true"` then the `content-disposition` header MAY contain a `filename` parameter.
-  * If the template data object has `"attachment":"true"` then the body SHOULD contain the file contents.
-  * If the template data object does not have `"attachment":"true"` then body SHOULD contain a value.
+  * If the template `data` object has `"attachment":"true"` then the `content-disposition` header MAY contain a `filename` parameter.
+  * If the template `data` object has `"attachment":"true"` then the body SHOULD contain the file contents.
+  * If the template `data` object does not have `"attachment":"true"` then body SHOULD contain a value.
 
 > __NOTE:__
 > At this time, multi-file attachments per template `data` object are not supported.

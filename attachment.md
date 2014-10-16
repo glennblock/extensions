@@ -15,7 +15,6 @@ The following RFCs/documents form the basis of the approach in this document:
 > __NOTE:__
 > The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119](http://tools.ietf.org/html/rfc2119).
 
-
 ## Live example
 To see a response containing attachment links, use the following command or just open in a browser: 
 
@@ -44,9 +43,12 @@ A client MAY receive a CJ document containing a _Write Template_ that accepts at
 This extension defines a new optional property for the `template` object: `contentType`. The two valid values for `contentType` are:
 
 * `multipart/form-data` - This is the one to use for uploading attachments.
-* `application/vnd.collection+json` - This is the one to use for sending regular CJ `items`. If the contentType property is missing, not supported and/or the client does not understand the provided value, the client MUST use `application/vnd.collection+json` when sending CJ documents.
+* `application/vnd.collection+json` - This is the one to use for sending regular CJ `items`. 
+ 
+> __NOTE:__
+> If the `contentType` property is missing, not supported and/or the client does not understand the provided value, the client MUST use `application/vnd.collection+json` when sending CJ `items`.
 
-### Attachment property
+### attachment property
 This extension defines a new property for the data object: `attachment`. This property is only valid for data objects that are children of the template object. 
 
 The two valid values for the `attachment` property:
@@ -80,18 +82,18 @@ This extension compiles with [RFC 2388] (http://tools.ietf.org/html/rfc2388) and
 
 Some key points to remember in the context of Collection+JSON:
  
-* For each data object in the _Write Template_ there SHOULD be:
-  * A separate body part for the data object.
-  * A `content-disposition` header of type `form-data` with a `name` parameter matching the template object name.
+* For each `data object` in the _Write Template_ there SHOULD be:
+  * A separate [part] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05#section-5) for the `data` object.
+  * A `content-disposition` header of type `form-data` with a `name` parameter matching the template `data` object` name.
   * If the template `data` object has `"attachment":"true"` then the `content-disposition` header MAY contain a `filename` parameter.
   * If the template `data` object has `"attachment":"true"` then the body SHOULD contain the file contents.
-  * If the template `data` object does not have `"attachment":"true"` then body SHOULD contain a value.
+  * If the template `data` object does not have `"attachment":"true"` then the body SHOULD contain a value.
 
 > __NOTE:__
-> At this time, multi-file attachments per template `data` object are not supported.
+> At this time, multi-file attachents per template `data` object are not supported.
 
 ### Example
-Below you can see the request contains three body parts. The first two contain textual information for `full-name` and `email`, while the third is an attachment containing the `avatar` image.  
+Below you can see the request contains three parts. The first two contain textual information for `full-name` and `email`, while the third is an attachment containing the `avatar` image.  
 ```
 content-type: multipart/form-data, boundary=AaB03x
 

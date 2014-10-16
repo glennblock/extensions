@@ -1,5 +1,5 @@
 # Attachment extension
-This extension outlines an extension which supports sending and receiving `collection+json` documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
+This extension supports sending and receiving `collection+json` documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
 
 Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 
@@ -76,12 +76,12 @@ Below you can can see the request contains a friend write template which specifi
 A client MAY send a request that contains attachments using the media type `multipart/form-data`. The request contains the data for the write template passed as form data via the `content-disposition header` as well as file uploads.
 
 ### Mulipart requests
-This extension compiles with [RFC2388] (http://tools.ietf.org/html/rfc2388) and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for guidelines on the proper way to craft the request.
+This extension compiles with [RFC 2388] (http://tools.ietf.org/html/rfc2388) and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for guidelines on the proper way to craft the request.
 
 Some key points to remember in the context of Collection+JSON:
  
 * For each data object in the write template there SHOULD be:
-  * A seperate part for the data object.
+  * A separate body part for the data object.
   * A `content-disposition` header of type `form-data` with a `name` parameter matching the template object name.
   * If the template data object has `"attachment":"true"` then the `content-disposition` header MAY contain a `filename` parameter.
   * If the template data object has `"attachment":"true"` then the body SHOULD contain the file contents.
@@ -109,7 +109,7 @@ content-type: image/jpeg
 ...
 --AaB03x
 ```
-## Receving attachments
+## Receiving attachments
 A client MAY receive a response which contains links which represent downloadable attachments.
 
 ## Attachment render value

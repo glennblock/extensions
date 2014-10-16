@@ -1,7 +1,7 @@
 # Attachment extension
 This extension outlines an extension which supports sending and receiving `collection+json` documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
 
-*Note*: Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
+Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 
 It is inspired by this [discussion](https://groups.google.com/forum/#!topic/collectionjson/pzdkNGx-aPE)
 
@@ -11,7 +11,10 @@ The following RFCs/documents form the basis of the approach in this document:
 * [2388] (http://tools.ietf.org/html/rfc2388) - Returning Values from Forms:  multipart/form-data
 * [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) - Updates to RFC2388
 * [6266] (http://tools.ietf.org/html/rfc6266) - Use of the Content-Disposition Header Field in the Hypertext Transfer Protocol (HTTP)
-* 
+
+> __NOTE:__
+> The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be interpreted as described in [RFC2119](http://tools.ietf.org/html/rfc2119).
+
 
 ## Live example
 To see a response containing attachment links, use the following command or just open in a browser: 
@@ -51,7 +54,8 @@ The two valid values for the `attachment` property:
 * true (treat this data element as an attachment to be uploaded)
 * false (treat this data element as a text element) If the client does not support the `attachment` property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
 
-**Note**: if the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element."
+> __NOTE:__
+> If the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element."
 
 ### Example
 Below you can can see the request contains a friend write template which specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
@@ -74,7 +78,8 @@ A client MAY send a request that contains attachments using the media type "mult
 ### Mulipart requests
 This extension compiles with [RFC2388] (http://tools.ietf.org/html/rfc2388) and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for the guidelines. 
 
-**Note**: At this time, multi-file attachements per template data object are not supported.
+> __NOTE:__
+> At this time, multi-file attachements per template data object are not supported.
 
 ### Example
 Below you can can see the request contains three body parts. The first two contain textual information for full-name and email, while the third is an attachment containing the avatar.  

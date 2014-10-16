@@ -90,7 +90,7 @@ Some key points to remember in the context of Collection+JSON:
   * If the template `data` object does not have `"attachment":"true"` then the body SHOULD contain a value.
 
 > __NOTE:__
-> At this time, multi-file attachents per template `data` object are not supported.
+> At this time, multi-file attachments per template `data` object are not supported.
 
 ### Example
 Below you can see the request contains three parts. The first two contain textual information for `full-name` and `email`, while the third is an attachment containing the `avatar` image.  

@@ -1,5 +1,5 @@
 # Attachment extension
-This extension supports sending and receiving `Collection+JSON` (CJ) documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
+This extension supports sending and receiving `Collection+JSON` (CJ) documents  containing file attachments. This approach uses a `multipart/form-data` request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
 
 Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 
@@ -23,13 +23,13 @@ To see a response containing attachment links, use the following command or just
 curl http://cj-attachment.azurewebsites.net/friends -v
 ```
 
-You can also grab a specific `friend`, using the `href` for the `item` in the payload. Also you can just as well create a direct request using the shortname (first initial + last name)
+You can also grab a specific `friend`, using the `href` for the `item` in the payload. Also you can just as well create a direct request using the short name (first initial + last name)
 
 ```test
 curl http://cj-attachment.azurewebsites.net/friends/mamundsen
 ```
 
-To send a `multipart/form-data` request with files, use the following command subsituting `thumbnail.png` with your own image.
+To send a `multipart/form-data` request with files, use the following command substituting `thumbnail.png` with your own image.
 
 ```text
 curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" --form blog="http://example.org/jdoe" --form avatar="@./thumbnail.png" http://cj-attachment.azurewebsites.net/friends
@@ -38,27 +38,27 @@ curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" 
 After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case. You can open it in a browser and it will download.
 
 ## Write template
-A client MAY receive a CJ document containing a Write template which accepts attachments which the client can use to send files. 
+A client MAY receive a CJ document containing a `Write Template` that accepts attachments that the client can use to send files. 
 
 ### Content-type property
 This extension defines a new optional property for the template object: `contentType`. The two valid values for `contentType` are:
 
-* `multipart/form-data` (this is the one to use for uploading attachments)
-* `application/vnd.collection+json` (this is the one to use for sending regular CJ documents) If the content-type property is missing, clients SHOULD use `application/vnd.collection+json` when sending a CJ document. If the content-type property is not supported and/or the provided value is not understood by the client, the client MUST use `application/vnd.collection+json` when sending CJ documents.
+* `multipart/form-data` - This is the one to use for uploading attachments.
+* `application/vnd.collection+json` - This is the one to use for sending regular CJ `items`. If the content-type property is missing, not supported and/or the client does not understand the provided value, the client MUST use `application/vnd.collection+json` when sending CJ documents.
 
 ### Attachment property
 This extension defines a new property for the data object: `attachment`. This property is only valid for data objects that are children of the template object. 
 
 The two valid values for the `attachment` property:
 
-* `true` (treat this data element as an attachment to be uploaded)
-* `false` (treat this data element as a text element) If the client does not support the `attachment` property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
+* `true`- Treat this data element as an attachment to be uploaded
+* `false` - Treat this data element as a text element. If the client does not support the `attachment` property and/or the client does not understand the value of this property, the client MUST treat the data element as a text element.
 
 > __NOTE:__
 > If the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element.
 
 ### Example
-Below you can can see the request contains a friend write template which specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
+Below you can can see the request contains a friend `Write Template` that specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
 
 ```javascript
 {
@@ -88,10 +88,10 @@ Some key points to remember in the context of Collection+JSON:
   * If the template data object does not have `"attachment":"true"` then body SHOULD contain a value.
 
 > __NOTE:__
-> At this time, multi-file attachements per template data object are not supported.
+> At this time, multi-file attachments per template `data` object are not supported.
 
 ### Example
-Below you can can see the request contains three body parts. The first two contain textual information for full-name and email, while the third is an attachment containing the avatar.  
+Below you can see the request contains three body parts. The first two contain textual information for `full-name` and `email`, while the third is an attachment containing the `avatar` image.  
 ```
 content-type: multipart/form-data, boundary=AaB03x
 
@@ -110,13 +110,13 @@ content-type: image/jpeg
 --AaB03x
 ```
 ## Receiving attachments
-A client MAY receive a response which contains links which represent downloadable attachments.
+A client MAY receive a response that contains links that represent downloadable attachments.
 
 ## Attachment render value
 A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
 
 ### Example
-Below is an example of a response containing links which are attachments, namely the `avatar` link has a `render` value of `attachment`. The client in this casse SHOULD download the associated image.
+Below is an example of a response containing links that are attachments, namely the `avatar` link has a `render` value of `attachment`. The client in this case SHOULD download the associated image.
 
 ```
 content-type: application/vnd.collection+json

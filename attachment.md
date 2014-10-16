@@ -1,5 +1,5 @@
 # Attachment extension
-This extension supports sending and receiving `collection+json` documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
+This extension supports sending and receiving `Collection+JSON` (CJ) documents  containing file attachments. This approach uses a multipart/form-data request for sending attachments and annotated links in the response for surfacing attachments to be downloaded.
 
 Each of the examples below is based on the existing CJ friends [example](http://amundsen.com/media-types/collection/examples/).
 
@@ -23,13 +23,13 @@ To see a response containing attachment links, use the following command or just
 curl http://cj-attachment.azurewebsites.net/friends -v
 ```
 
-You can also grab a specific friend, using the href for the item in the payload. Also you can just as well create a direct request using the shortname (first initial + last name)
+You can also grab a specific `friend`, using the `href` for the `item` in the payload. Also you can just as well create a direct request using the shortname (first initial + last name)
 
 ```test
 curl http://cj-attachment.azurewebsites.net/friends/mamundsen
 ```
 
-To send a multipart/form-data request with files, use the following command subsituting `thumbnail.png` with your own image.
+To send a `multipart/form-data` request with files, use the following command subsituting `thumbnail.png` with your own image.
 
 ```text
 curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" --form blog="http://example.org/jdoe" --form avatar="@./thumbnail.png" http://cj-attachment.azurewebsites.net/friends
@@ -38,10 +38,10 @@ curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" 
 After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case. You can open it in a browser and it will download.
 
 ## Write template
-A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
+A client MAY receive a CJ document containing a Write template which accepts attachments which the client can use to send files. 
 
 ### Content-type property
-This extension defines a new optional property for the template object: `contentType`. The two valid values for `contentType ` are:
+This extension defines a new optional property for the template object: `contentType`. The two valid values for `contentType` are:
 
 * `multipart/form-data` (this is the one to use for uploading attachments)
 * `application/vnd.collection+json` (this is the one to use for sending regular CJ documents) If the content-type property is missing, clients SHOULD use `application/vnd.collection+json` when sending a CJ document. If the content-type property is not supported and/or the provided value is not understood by the client, the client MUST use `application/vnd.collection+json` when sending CJ documents.

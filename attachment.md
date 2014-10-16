@@ -5,7 +5,7 @@ Each of the examples below is based on the existing CJ friends [example](http://
 
 It is inspired by this [discussion](https://groups.google.com/forum/#!topic/collectionjson/pzdkNGx-aPE)
 
-The following RFCs/documents form the basis of the approach in this document:
+The following RFCs/documents form the basis of the approach used by this extension:
 
 * [1341] (http://www.w3.org/Protocols/rfc1341/7_2_Multipart.html) - The Multipart Content-Type
 * [2388] (http://tools.ietf.org/html/rfc2388) - Returning Values from Forms:  multipart/form-data

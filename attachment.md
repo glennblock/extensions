@@ -37,7 +37,7 @@ curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" 
 
 After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case. You can open it in a browser and it will download.
 
-## Write template
+## Receiving Write Templates that accept attachments
 A client MAY receive a CJ document containing a _Write Template_ that accepts attachments that the client can use to send files. 
 
 ### Content-type property

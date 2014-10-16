@@ -72,7 +72,7 @@ A client MAY send a request that contains attachments using the media type "mult
 ### Mulipart requests
 This extension compiles with with [RFC2388] and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for the guidelines. 
 
-Note: At this time, multi-file attachements per template data object are not supported.
+**Note**: At this time, multi-file attachements per template data object are not supported.
 
 ### Example
 Below you can can see the request contains three body parts. The first two contain textual information for full-name and email, while the third is an attachment containing the avatar.  

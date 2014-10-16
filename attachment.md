@@ -54,7 +54,7 @@ This extension defines a new property for the data object: `attachment`. This pr
 The two valid values for the `attachment` property:
 
 * `true`- Treat this data element as an attachment to be uploaded
-* `false` - Treat this data element as a text element. If the client does not support the `attachment` property and/or the client does not understand the value of this property, the client MUST treat the data element as a text element.
+* `false` - Treat this data element as a text element. 
 
 > __NOTE:__
 > If the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element.
@@ -115,7 +115,10 @@ content-type: image/jpeg
 A client MAY receive a response that contains `items` with `link` objects that represent downloadable attachments.
 
 ### Attachment render value
-A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
+A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  
+
+> __NOTE:__
+> Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
 
 ### Example
 Below is an example of a response containing links that are attachments, namely the `avatar` link has a `render` value of `attachment`. The client in this case SHOULD download the associated image.

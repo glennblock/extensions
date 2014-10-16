@@ -112,7 +112,7 @@ content-type: image/jpeg
 ## Receiving attachments
 A client MAY receive a response that contains links that represent downloadable attachments.
 
-## Attachment render value
+### Attachment render value
 A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.
 
 ### Example

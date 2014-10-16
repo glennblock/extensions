@@ -109,7 +109,7 @@ content-type: image/jpeg
 ...
 --AaB03x
 ```
-## Receiving items with attachments
+## Receiving items with attachment links
 A client MAY receive a response that contains `items` with links that represent downloadable attachments.
 
 ### Attachment render value

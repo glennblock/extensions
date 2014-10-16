@@ -72,7 +72,7 @@ Below you can can see the request contains a friend _Write Template_ that specif
   }
 }
 ```
-## Sending attachments
+## Sending items with attachments
 A client MAY send a request that contains attachments using the media type `multipart/form-data`. The request contains the data for the _Write Template_ passed as form data via the `content-disposition header` as well as file uploads.
 
 ### Mulipart requests
@@ -109,8 +109,8 @@ content-type: image/jpeg
 ...
 --AaB03x
 ```
-## Receiving attachments
-A client MAY receive a response that contains links that represent downloadable attachments.
+## Receiving items with attachments
+A client MAY receive a response that contains `items` with links that represent downloadable attachments.
 
 ### Attachment render value
 A new `render` value of `attachment` is introduced for links. This informs the client that it should treat the `href` for the link as downloadable.  Clients that do not support the `attachment` value for render MUST treat the associated href as a navigation link.

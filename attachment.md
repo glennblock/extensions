@@ -40,11 +40,11 @@ After the image is uploaded, you will find it at `http://cj-attachment.azurewebs
 ## Receiving Write Templates that accept attachments
 A client MAY receive a CJ document containing a _Write Template_ that accepts attachments that the client can use to send files. 
 
-### Content-type property
+### contentType property
 This extension defines a new optional property for the `template` object: `contentType`. The two valid values for `contentType` are:
 
 * `multipart/form-data` - This is the one to use for uploading attachments.
-* `application/vnd.collection+json` - This is the one to use for sending regular CJ `items`. If the content-type property is missing, not supported and/or the client does not understand the provided value, the client MUST use `application/vnd.collection+json` when sending CJ documents.
+* `application/vnd.collection+json` - This is the one to use for sending regular CJ `items`. If the contentType property is missing, not supported and/or the client does not understand the provided value, the client MUST use `application/vnd.collection+json` when sending CJ documents.
 
 ### Attachment property
 This extension defines a new property for the data object: `attachment`. This property is only valid for data objects that are children of the template object. 

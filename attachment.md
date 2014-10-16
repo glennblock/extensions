@@ -58,7 +58,7 @@ The two valid values for the `attachment` property:
 > If the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element.
 
 ### Example
-Below you can can see the request contains a friend _Write Template_ that specifies a content-type of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
+Below you can can see the request contains a friend _Write Template_ that specifies a contentType of `multipart/form-data`. The `avatar` data object is marked as an attachment, indicating that a file should be uploaded.
 
 ```javascript
 {

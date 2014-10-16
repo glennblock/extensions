@@ -78,14 +78,14 @@ A client MAY send a request that contains attachments using the media type `mult
 ### Mulipart requests
 This extension compiles with [RFC2388] (http://tools.ietf.org/html/rfc2388) and [draft-multi-part-form-data] (https://tools.ietf.org/html/draft-ietf-appsawg-multipart-form-data-05) for sending requests. You should refer to these documents for guidelines on the proper way to craft the request.
 
-A few key points to remember in the context of Collection-Json:
+Some key points to remember in the context of Collection+JSON:
  
 * For each data object in the write template there SHOULD be:
-** A seperate part for the data object.
-** A `content-disposition` header of type `form-data` with a `name` parameter matching the template object name.
-** If the template data object has `"attachment":"true"` then the `content-disposition` header MAY contain a `filename` parameter.
-** If the template data object has `"attachment":"true"` then the body SHOULD contain the file contents.
-** If the template data object does not have `"attachment":"true"` then body SHOULD contain a value.
+  * A seperate part for the data object.
+  * A `content-disposition` header of type `form-data` with a `name` parameter matching the template object name.
+  * If the template data object has `"attachment":"true"` then the `content-disposition` header MAY contain a `filename` parameter.
+  * If the template data object has `"attachment":"true"` then the body SHOULD contain the file contents.
+  * If the template data object does not have `"attachment":"true"` then body SHOULD contain a value.
 
 > __NOTE:__
 > At this time, multi-file attachements per template data object are not supported.

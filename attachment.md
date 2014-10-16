@@ -118,7 +118,7 @@ A new `render` value of `attachment` is introduced for links. This informs the c
 ### Example
 Below is an example of a response containing links that are attachments, namely the `avatar` link has a `render` value of `attachment`. The client in this case SHOULD download the associated image.
 
-```
+```javascript
 content-type: application/vnd.collection+json
 { "collection" :
   {

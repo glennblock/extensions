@@ -51,8 +51,8 @@ This extension defines a new property for the data object: `attachment`. This pr
 
 The two valid values for the `attachment` property:
 
-* true (treat this data element as an attachment to be uploaded)
-* false (treat this data element as a text element) If the client does not support the `attachment` property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
+* `true` (treat this data element as an attachment to be uploaded)
+* `false` (treat this data element as a text element) If the client does not support the `attachment` property and/or the value of this property is not understood, the client MUST treat the data element as a text element.
 
 > __NOTE:__
 > If the attachment property is missing or set to a value to client does not understand, the client SHOULD treat the data element as a text element.

@@ -32,13 +32,11 @@ curl -0 -v -include --form full-name="John Doe" --form email="jdoe@example.org" 
 
 After the image is uploaded, you will find it at `http://cj-attachment.azurewebsites.net/avatars?name={file}` i.e. `http://cj-attachment.azurewebsites.net/avatars/name=thumbnail.png` in the previous case. You can open it in a browser and it will download.
 
-
-
 ## Write template
 A client MAY receive a CollectionJson document containing a Write template which accepts attachments which the client can use to send files. 
 
 ### Content-type property
-This extension defines a new optional property for the template object: `content-type`. The two valid values for `content-type ` are:
+This extension defines a new optional property for the template object: `contentType`. The two valid values for `contentType ` are:
 
 * `multipart/form-data` (this is the one to use for uploading attachments)
 * `application/vnd.collection+json` (this is the one to use for sending regular CJ documents) If the content-type property is missing, clients SHOULD use `application/vnd.collection+json` when sending a CJ document. If the content-type property is not supported and/or the provided value is not understood by the client, the client MUST use `application/vnd.collection+json` when sending CJ documents.
@@ -57,7 +55,7 @@ Below you can can see the request contains a friend write template which specifi
 ```javascript
 {
   "template" : {
-    "content-type" : "multipart/form-data",
+    "contentType" : "multipart/form-data",
     "data" : [
       {"name" : "full-name", "value" : ""},
       {"name" : "email", "value" : ""},

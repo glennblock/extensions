@@ -122,6 +122,7 @@ Below is an example of a response containing links that are attachments, namely 
 
 ```javascript
 content-type: application/vnd.collection+json
+
 { "collection" :
   {
     "version" : "1.0",
